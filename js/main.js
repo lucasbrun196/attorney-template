@@ -174,39 +174,6 @@
     if (d.open) faqs.forEach((o) => { if (o !== d) o.open = false; });
   }));
 
-  /* Depoimentos */
-  const quotes = [...document.querySelectorAll('.quote')];
-  const count = document.querySelector('.quotes__count b');
-  let current = 0;
-  let autoplay;
-  const show = (i) => {
-    current = (i + quotes.length) % quotes.length;
-    quotes.forEach((q, n) => q.classList.toggle('is-active', n === current));
-    count.textContent = String(current + 1).padStart(2, '0');
-  };
-  const startAuto = () => {
-    clearInterval(autoplay);
-    if (!reduceMotion) autoplay = setInterval(() => show(current + 1), 7000);
-  };
-  document.querySelectorAll('.quotes__btn').forEach((b) => b.addEventListener('click', () => {
-    show(current + Number(b.dataset.dir));
-    startAuto();
-  }));
-  startAuto();
-
-  /* Botões com leve efeito magnético */
-  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reduceMotion) {
-    document.querySelectorAll('.btn, .quotes__btn').forEach((el) => {
-      el.addEventListener('mousemove', (e) => {
-        const r = el.getBoundingClientRect();
-        const x = (e.clientX - r.left - r.width / 2) * 0.15;
-        const y = (e.clientY - r.top - r.height / 2) * 0.25;
-        el.style.transform = `translate(${x}px, ${y}px)`;
-      });
-      el.addEventListener('mouseleave', () => { el.style.transform = ''; });
-    });
-  }
-
   /* Formulário (demonstração — não envia dados) */
   const form = document.querySelector('.form');
   const status = form.querySelector('.form__status');
@@ -219,6 +186,105 @@
     if (d.length > 2) out = `(${d.slice(0, 2)}) ${d.slice(2)}`;
     if (d.length > 7) out = `(${d.slice(0, 2)}) ${d.slice(2, d.length - 4)}-${d.slice(-4)}`;
     phone.value = out;
+  });
+
+  /* Dropdown de assunto (substitui a lista nativa, mantendo o <select> para validação) */
+  form.querySelectorAll('[data-select]').forEach((wrap) => {
+    const native = wrap.querySelector('select');
+    const trigger = wrap.querySelector('.select__trigger');
+    const valueEl = wrap.querySelector('.select__value');
+    const list = wrap.querySelector('.select__list');
+    const choices = [...native.options].filter((o) => !o.disabled);
+    let active = -1;
+
+    const items = choices.map((opt, i) => {
+      const li = document.createElement('li');
+      li.className = 'select__option';
+      li.id = `${native.name}-opt-${i}`;
+      li.setAttribute('role', 'option');
+      li.setAttribute('aria-selected', 'false');
+      li.textContent = opt.textContent;
+      li.addEventListener('click', () => choose(i));
+      li.addEventListener('mousemove', () => setActive(i, false));
+      list.appendChild(li);
+      return li;
+    });
+
+    const setActive = (i, scroll = true) => {
+      active = i;
+      items.forEach((li, n) => li.classList.toggle('is-active', n === i));
+      if (i >= 0) {
+        trigger.setAttribute('aria-activedescendant', items[i].id);
+        if (scroll) items[i].scrollIntoView({ block: 'nearest' });
+      }
+    };
+
+    const sync = () => {
+      const idx = choices.indexOf(native.selectedOptions[0]);
+      valueEl.textContent = idx >= 0 ? choices[idx].textContent : '';
+      wrap.classList.toggle('has-value', idx >= 0);
+      items.forEach((li, n) => li.setAttribute('aria-selected', String(n === idx)));
+      return idx;
+    };
+
+    const open = () => {
+      if (wrap.classList.contains('is-open')) return;
+      wrap.classList.add('is-open');
+      trigger.setAttribute('aria-expanded', 'true');
+      setActive(Math.max(sync(), 0));
+      document.addEventListener('pointerdown', outside);
+    };
+    const close = () => {
+      wrap.classList.remove('is-open');
+      trigger.setAttribute('aria-expanded', 'false');
+      trigger.removeAttribute('aria-activedescendant');
+      document.removeEventListener('pointerdown', outside);
+    };
+    const outside = (e) => { if (!wrap.contains(e.target)) close(); };
+
+    function choose(i) {
+      native.value = choices[i].value;
+      native.dispatchEvent(new Event('change', { bubbles: true }));
+      sync();
+      close();
+      trigger.focus();
+    }
+
+    trigger.addEventListener('click', () => (wrap.classList.contains('is-open') ? close() : open()));
+    trigger.addEventListener('keydown', (e) => {
+      const isOpen = wrap.classList.contains('is-open');
+      switch (e.key) {
+        case 'ArrowDown':
+        case 'ArrowUp': {
+          e.preventDefault();
+          if (!isOpen) { open(); return; }
+          const step = e.key === 'ArrowDown' ? 1 : -1;
+          setActive((active + step + items.length) % items.length);
+          break;
+        }
+        case 'Home': if (isOpen) { e.preventDefault(); setActive(0); } break;
+        case 'End': if (isOpen) { e.preventDefault(); setActive(items.length - 1); } break;
+        case 'Enter':
+        case ' ':
+          e.preventDefault();
+          if (isOpen && active >= 0) choose(active); else open();
+          break;
+        case 'Escape': if (isOpen) { e.preventDefault(); close(); } break;
+        case 'Tab': close(); break;
+        default:
+          // digitar a inicial pula para a opção correspondente
+          if (e.key.length === 1) {
+            const k = e.key.toLowerCase();
+            const from = active + 1;
+            const hit = [...items.slice(from), ...items.slice(0, from)]
+              .find((li) => li.textContent.toLowerCase().startsWith(k));
+            if (hit) { if (!isOpen) open(); setActive(items.indexOf(hit)); }
+          }
+      }
+    });
+
+    form.addEventListener('reset', () => setTimeout(sync));
+    sync();
   });
 
   form.addEventListener('submit', (e) => {
@@ -234,7 +300,7 @@
     if (firstInvalid) {
       status.classList.add('is-error');
       status.textContent = 'Revise os campos destacados antes de enviar.';
-      firstInvalid.focus();
+      (firstInvalid.closest('[data-select]')?.querySelector('.select__trigger') || firstInvalid).focus();
       return;
     }
 

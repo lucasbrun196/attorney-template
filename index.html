@@ -175,8 +175,10 @@
             </button>
             <div class="area__body">
               <div>
+                <div class="area__content">
                 <p>Constituição e reorganização de sociedades, acordos de sócios, due diligence, fusões e aquisições, governança para empresas familiares e planejamento de sucessão na gestão.</p>
                 <ul><li>Acordos de quotistas e acionistas</li><li>Operações de compra e venda de participação</li><li>Dissolução parcial e apuração de haveres</li></ul>
+                </div>
               </div>
             </div>
           </li>
@@ -189,8 +191,10 @@
             </button>
             <div class="area__body">
               <div>
+                <div class="area__content">
                 <p>Planejamento tributário lícito, defesa em autos de infração, recuperação de créditos e acompanhamento da transição da reforma tributária (IBS e CBS) para empresas de todos os regimes.</p>
                 <ul><li>Defesas administrativas no CARF e TIT</li><li>Recuperação de tributos pagos indevidamente</li><li>Diagnóstico de impacto da reforma tributária</li></ul>
+                </div>
               </div>
             </div>
           </li>
@@ -203,8 +207,10 @@
             </button>
             <div class="area__body">
               <div>
+                <div class="area__content">
                 <p>Assessoria exclusiva ao empregador: revisão de políticas internas, auditoria de passivo, negociação sindical e defesa em reclamações individuais e coletivas.</p>
                 <ul><li>Auditoria de passivo trabalhista</li><li>Programas de compliance e canal de denúncias</li><li>Acordos coletivos e convenções</li></ul>
+                </div>
               </div>
             </div>
           </li>
@@ -217,8 +223,10 @@
             </button>
             <div class="area__body">
               <div>
+                <div class="area__content">
                 <p>Redação e revisão de contratos comerciais, cobrança estratégica, responsabilidade civil e arbitragem. Priorizamos a solução negociada sempre que ela proteger melhor o cliente.</p>
                 <ul><li>Contratos de fornecimento e distribuição</li><li>Arbitragem e mediação empresarial</li><li>Execuções e recuperação de crédito</li></ul>
+                </div>
               </div>
             </div>
           </li>
@@ -231,8 +239,10 @@
             </button>
             <div class="area__body">
               <div>
+                <div class="area__content">
                 <p>Holdings familiares, testamentos, inventários judiciais e extrajudiciais, pactos antenupciais e divórcios conduzidos com discrição e o menor desgaste possível.</p>
                 <ul><li>Estruturação de holding patrimonial</li><li>Inventário extrajudicial em cartório</li><li>Pactos e regimes de bens</li></ul>
+                </div>
               </div>
             </div>
           </li>
@@ -245,8 +255,10 @@
             </button>
             <div class="area__body">
               <div>
+                <div class="area__content">
                 <p>Due diligence de imóveis, incorporações, contratos built to suit, locações comerciais e regularização fundiária urbana e rural.</p>
                 <ul><li>Auditoria imobiliária para aquisição</li><li>Locação comercial e renovatória</li><li>Usucapião e retificação de área</li></ul>
+                </div>
               </div>
             </div>
           </li>
@@ -259,8 +271,10 @@
             </button>
             <div class="area__body">
               <div>
+                <div class="area__content">
                 <p>Defesa de executivos e empresas em investigações por crimes tributários, contra o sistema financeiro e contra a ordem econômica, além de investigações internas.</p>
                 <ul><li>Acompanhamento em inquéritos e CPIs</li><li>Investigações corporativas internas</li><li>Acordos de não persecução penal</li></ul>
+                </div>
               </div>
             </div>
           </li>
@@ -355,32 +369,6 @@
               <span class="person__oab">OAB/SP 298.112</span>
             </div>
           </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Depoimentos -->
-    <section class="quotes section" aria-label="Depoimentos de clientes">
-      <div class="container quotes__inner">
-        <span class="quotes__mark" aria-hidden="true">&ldquo;</span>
-        <div class="quotes__viewport">
-          <figure class="quote is-active">
-            <blockquote>Tivemos uma autuação fiscal que ameaçava o caixa do ano inteiro. A equipe explicou cada risco com franqueza e conduziu o processo até o fim com uma calma que fez toda a diferença.</blockquote>
-            <figcaption><strong>Cláudia M.</strong> Diretora financeira · indústria de embalagens, Campinas</figcaption>
-          </figure>
-          <figure class="quote">
-            <blockquote>Reorganizamos a holding da família em três gerações sem uma única discussão no almoço de domingo. Isso, para nós, não tem preço.</blockquote>
-            <figcaption><strong>Eduardo T.</strong> Sócio-administrador · grupo agropecuário, Ribeirão Preto</figcaption>
-          </figure>
-          <figure class="quote">
-            <blockquote>O que mais pesa é saber quem atende o telefone. Em seis anos, nunca fiquei sem resposta no mesmo dia.</blockquote>
-            <figcaption><strong>Renato A.</strong> CEO · rede de clínicas odontológicas, São Paulo</figcaption>
-          </figure>
-        </div>
-        <div class="quotes__nav">
-          <button class="quotes__btn" data-dir="-1" aria-label="Depoimento anterior"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
-          <span class="quotes__count"><b>01</b> / 03</span>
-          <button class="quotes__btn" data-dir="1" aria-label="Próximo depoimento"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </div>
       </div>
     </section>
@@ -499,8 +487,8 @@
             <input type="email" name="email" required placeholder=" " autocomplete="email">
             <span>E-mail</span>
           </label>
-          <label class="field field--select">
-            <select name="area" required>
+          <div class="field field--select" data-select>
+            <select name="area" required class="select__native" tabindex="-1" aria-hidden="true">
               <option value="" selected disabled hidden></option>
               <option>Direito Empresarial</option>
               <option>Tributário</option>
@@ -511,15 +499,19 @@
               <option>Penal Econômico</option>
               <option>Ainda não sei</option>
             </select>
-            <span>Assunto</span>
-          </label>
+            <button type="button" class="select__trigger" id="assunto-btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="assunto-label assunto-btn">
+              <span class="select__value"></span>
+            </button>
+            <span id="assunto-label">Assunto</span>
+            <ul class="select__list" role="listbox" tabindex="-1" aria-labelledby="assunto-label"></ul>
+          </div>
           <label class="field">
             <textarea name="mensagem" rows="4" required placeholder=" "></textarea>
             <span>Conte brevemente o que aconteceu</span>
           </label>
           <label class="check">
             <input type="checkbox" name="lgpd" required>
-            <span>Autorizo o uso destes dados exclusivamente para retorno do contato, conforme a LGPD.</span>
+            <span>Autorizo o uso destes dados para retorno do contato, conforme a LGPD.</span>
           </label>
           <button type="submit" class="btn btn--gold btn--full"><span>Enviar mensagem</span>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -567,7 +559,7 @@
     </div>
   </footer>
 
-  <a href="https://wa.me/5511930450218" class="whats" aria-label="Conversar pelo WhatsApp" target="_blank" rel="noopener">
+  <a href="https://wa.me/5500000000000" class="whats" aria-label="Conversar pelo WhatsApp" target="_blank" rel="noopener">
     <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3Zm0 23.7c-2 0-3.9-.5-5.6-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7Zm5.9-8c-.3-.2-1.9-1-2.2-1-.3-.2-.5-.2-.7.1l-1 1.2c-.2.2-.4.3-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6.3-.5v-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6 0-.9.4-.3.3-1.2 1.1-1.2 2.7s1.2 3.2 1.4 3.4c.2.2 2.4 3.6 5.7 5 2.8 1.1 3.4.9 4 .8.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5l-.6-.4Z"/></svg>
   </a>
 
